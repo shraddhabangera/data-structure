@@ -1,0 +1,166 @@
+mysql> desc BRANCH;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| branchId   | varchar(20) | NO   | PRI | NULL    |       |
+| branchName | varchar(30) | NO   |     | NULL    |       |
+| HOD        | varchar(30) | NO   |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> desc STUDENT;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| USN      | varchar(20) | NO   | PRI | NULL    |       |
+| name     | varchar(30) | NO   |     | NULL    |       |
+| address  | varchar(70) | YES  |     | NULL    |       |
+| branchID | varchar(20) | YES  | MUL | NULL    |       |
+| sem      | int         | NO   |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> desc BOOK;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| bookId    | varchar(20) | NO   | PRI | NULL    |       |
+| bookName  | varchar(30) | NO   |     | NULL    |       |
+| authorID  | varchar(20) | YES  | MUL | NULL    |       |
+| publisher | varchar(20) | NO   |     | NULL    |       |
+| branchId  | varchar(20) | YES  | MUL | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> desc AUTHOR;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| authorId   | varchar(20) | NO   | PRI | NULL    |       |
+| authorName | varchar(30) | NO   |     | NULL    |       |
+| country    | varchar(20) | NO   |     | NULL    |       |
+| age        | int         | NO   |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> desc BORROW;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| USN           | varchar(20) | YES  | MUL | NULL    |       |
+| bookId        | varchar(20) | YES  | MUL | NULL    |       |
+| borrowed_date | date        | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from BRANCH;
++----------+------------+------------------+
+| branchId | branchName | HOD              |
++----------+------------+------------------+
+| B1       | MCA        | Dr.Vandana       |
+| B2       | MBA        | Dr.Iyer          |
+| B3       | CS         | Dr.Krishna Mohan |
+| B4       | MECH       | Dr.Manujesh      |
+| B5       | CIVIL      | Dr.Anand         |
++----------+------------+------------------+
+5 rows in set (0.01 sec)
+
+mysql> select * from STUDENT;
++------------+-----------+---------+----------+-----+
+| USN        | name      | address | branchID | sem |
++------------+-----------+---------+----------+-----+
+| 4VP21MC042 | Shraddha  | Bantwal | B1       |   2 |
+| 4VP21MC043 | Shrunga   | Puttur  | B3       |   3 |
+| 4VP21MC044 | Shruthi   | Puttur  | B2       |   2 |
+| 4VP21MC045 | Shruthika | Mura    | B5       |   3 |
+| 4VP21MC046 | Shrux     | Mani    | B4       |   1 |
++------------+-----------+---------+----------+-----+
+5 rows in set (0.00 sec)
+insert into AUTHOR values("A1","Ramez Elmasri","Arlinhton",51);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into AUTHOR values("A2","Baidyanath Mishra","India",52);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into AUTHOR values("A3","Ellis Horowitz","US",41);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into AUTHOR values("A4","Yunus","Japan",34);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into AUTHOR values("A5","Deepak Kehamani","India",39);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from AUTHOR;
++----------+-------------------+-----------+-----+
+| authorId | authorName        | country   | age |
++----------+-------------------+-----------+-----+
+| A1       | Ramez Elmasri     | Arlinhton |  51 |
+| A2       | Baidyanath Mishra | India     |  52 |
+| A3       | Ellis Horowitz    | US        |  41 |
+| A4       | Yunus             | Japan     |  34 |
+| A5       | Deepak Kehamani   | India     |  39 |
++----------+-------------------+-----------+-----+
+5 rows in set (0.00 sec)
+insert into BOOK values("BK1","DBMS","A1","PEARSON","B1");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into BOOK values("BK2","Research Methodology","A2","PEARSON","B2");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into BOOK values("BK3","Data Structure","A3","MC Graw Hill","B3");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into BOOK values("BK4","Artificial Intelligence","A4","MC Graw Hill","B4");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into BOOK values("BK5","Thermo Dynamics","A5","Taylor","B5");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into BOOK values("BK6","Algorithms","A3","Mc Graw Hill","B3");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from BOOK;
++--------+-------------------------+----------+--------------+----------+
+| bookId | bookName                | authorID | publisher    | branchId |
++--------+-------------------------+----------+--------------+----------+
+| BK1    | DBMS                    | A1       | PEARSON      | B1       |
+| BK2    | Research Methodology    | A2       | PEARSON      | B2       |
+| BK3    | Data Structure          | A3       | MC Graw Hill | B3       |
+| BK4    | Artificial Intelligence | A4       | MC Graw Hill | B4       |
+| BK5    | Thermo Dynamics         | A5       | Taylor       | B5       |
+| BK6    | Algorithms              | A3       | Mc Graw Hill | B3       |
++--------+-------------------------+----------+--------------+----------+
+6 rows in set (0.00 sec)
+insert into BORROW values("4VP21MC042","BK1",'2022-07-10');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into BORROW values("4VP21MC045","BK3",'2022-07-8');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into BORROW values("4VP21MC046","BK6",'2022-06-11');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into BORROW values("4VP21MC042","BK2",'2022-06-28');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into BORROW values("4VP21MC044","BK1",'2022-07-02');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into BORROW values("4VP21MC046","BK5",'2022-07-04');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from BORROW;
++------------+--------+---------------+
+| USN        | bookId | borrowed_date |
++------------+--------+---------------+
+| 4VP21MC042 | BK1    | 2022-07-10    |
+| 4VP21MC045 | BK3    | 2022-07-08    |
+| 4VP21MC046 | BK6    | 2022-06-11    |
+| 4VP21MC042 | BK2    | 2022-06-28    |
+| 4VP21MC044 | BK1    | 2022-07-02    |
+| 4VP21MC046 | BK5    | 2022-07-04    |
++------------+--------+---------------+
+6 rows in set (0.00 sec)
+
+
